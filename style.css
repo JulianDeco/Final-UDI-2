@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,600;1,300&display=swap');
+
+/* body{
+    font-family: 'Open Sans', sans-serif;
+}
+ */
+.logo-guarderia{
+    max-width: 85px;
+    max-height: 50px;
+}
+
+.content{
+    padding-top: 80px;
+    margin-bottom: 30px;
+}
