@@ -8,15 +8,19 @@ if ($conexion->connect_error) {
 }
 
 // Función para agregar un nuevo registro
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["nombre"])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["NOMBRE"])) {
     // Obtener datos del formulario POST
-    $nombre = $_POST["nombre"];
-    $telefono = $_POST["telefono"];
-    $correo = $_POST["correo"];
+    $nombre = $_POST["NOMBRE"];
+    $telefono = $_POST["TELEFONO"];
+    $direccion = $_POST["DIRECCION"];
+    $dni = $_POST["DNI"];
+    $estado = $_POST["ESTADO"];
+    $mail = $_POST["EMAIL"];
+    $fecha_alta = $_POST["FECHA_ALTA"];
+    $fecha_baja = $_POST["FECHA_BAJA"];
 
     // Crear la consulta SQL para insertar un nuevo registro en la tabla "registros"
-    $sql = "INSERT INTO kayak_clientes (nombre, telefono, correo) VALUES ('$nombre', '$telefono', '$correo')";
-
+    $sql = "INSERT INTO kayak_clientes (nombre, telefono, mail,dni, fecha_alta,  fecha_baja, direccion, estado) VALUES ('$nombre', '$telefono', '$mail', '$dni', '$fecha_alta', '$fecha_baja', '$direccion', '$estado')";
     // Ejecutar la consulta y verificar si fue exitosa
     if ($conexion->query($sql) === TRUE) {
         // Redirigir de vuelta a la página actual después de agregar un registro
@@ -40,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["eliminar"])) {
 }
 
 // Consulta para obtener todos los registros
-$sql = "SELECT id, nombre, telefono FROM kayak_clientes";
+$sql = "SELECT id, nombre, telefono, direccion, dni, estado, fecha_alta, fecha_baja, mail FROM kayak_clientes";
 $resultado = $conexion->query($sql);
 
 // Cerrar la conexión a la base de datos
@@ -99,7 +103,7 @@ $conexion->close();
         <h1 class="text-center">Registros de Clientes</h1>
 
         <!-- Formulario para agregar un nuevo registro -->
-        <form method="post" action="procesar_formulario.php" class="d-flex flex-column align-items-center">
+        <form method="post" action="clientes.php" class="d-flex flex-column align-items-center">
             <div class="row w-75">
                 <div class="col-md-4">
                     <div class="form-group" style="margin-bottom: 15px;">
@@ -161,42 +165,77 @@ $conexion->close();
             </div>
         </form>
 
-        <form method="post" action="procesar_formulario.php" class="m-3 d-flex flex-column align-items-center">
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="m-3 d-flex flex-column align-items-center">
             <div class="row">
                 <div class="col-md-8">
                     <label for="search">BUSCAR:</label>
-                    <input class="form-control" type="search" id="search" name="search" required>
+                    <input class="form-control" type="search" id="search" name="search">
                 </div>
                 <div class="col-md-4 py-2">
                     <br>
-                    <button type="submit" class="btn btn-primary btn-block" name="search">Buscar</button>
+                    <button type="submit" class="btn btn-primary btn-block" name="searchbtn">Buscar</button>
                 </div>
             </div>
         </form>
         <!-- Lista de registros -->
-        <table class="table m-5 d-flex flex-row justify-content-center align-items-center">
+        <table class="table m-5">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Direccion</th>
+                    <th scope="col">Dirección</th>
                     <th scope="col">DNI</th>
                     <th scope="col">Teléfono</th>
                     <th scope="col">Correo</th>
                     <th scope="col">Estado</th>
+                    <th scope="col">Fecha alta</th>
+                    <th scope="col">Fecha baja</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
 
             <?php
-            if ($resultado->num_rows > 0) {
+            if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["search"])) {
+
+                $conexion = new mysqli("localhost", "root", "", "registro-kayaks");
+                $search = $_POST["search"];
+            
+                $sql = "SELECT id, nombre, telefono, direccion, dni, estado, fecha_alta, fecha_baja, mail FROM kayak_clientes WHERE dni LIKE '$search%'";
+                $resultado_search = $conexion->query($sql);
+
+                while ($fila = $resultado_search->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $fila["id"] . "</td>";
+                    echo "<td>" . $fila["nombre"] . "</td>";
+                    echo "<td>" . $fila["direccion"] . "</td>";
+                    echo "<td>" . $fila["dni"] . "</td>";
+                    echo "<td>" . $fila["telefono"] . "</td>";
+                    echo "<td>" . $fila["mail"] . "</td>";
+                    echo "<td>" . $fila["estado"] . "</td>";
+                    echo "<td>" . $fila["fecha_alta"] . "</td>";
+                    echo "<td>" . $fila["fecha_baja"] . "</td>";
+                    // Crear un formulario para eliminar un registro con un botón "Eliminar"
+                    echo "<td>
+                        <form method='post' action='" . $_SERVER['PHP_SELF'] . "'>
+                            <input type='hidden' name='eliminar' value='" . $fila["id"] . "'>
+                            <input type='submit' value='Eliminar'>
+                        </form>
+                    </td>";
+                    echo "</tr>";
+                }
+            } else if ($resultado->num_rows > 0) {
                 while ($fila = $resultado->fetch_assoc()) {
                     echo "<tr>";
                     echo "<td>" . $fila["id"] . "</td>";
                     echo "<td>" . $fila["nombre"] . "</td>";
+                    echo "<td>" . $fila["direccion"] . "</td>";
+                    echo "<td>" . $fila["dni"] . "</td>";
                     echo "<td>" . $fila["telefono"] . "</td>";
-                    echo "<td>" . $fila["correo"] . "</td>";
+                    echo "<td>" . $fila["mail"] . "</td>";
+                    echo "<td>" . $fila["estado"] . "</td>";
+                    echo "<td>" . $fila["fecha_alta"] . "</td>";
+                    echo "<td>" . $fila["fecha_baja"] . "</td>";
                     // Crear un formulario para eliminar un registro con un botón "Eliminar"
                     echo "<td>
                         <form method='post' action='" . $_SERVER['PHP_SELF'] . "'>
