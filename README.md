@@ -24,26 +24,41 @@ Gestión Guardería Náutica is a web application designed to manage clients and
 
    ```bash
    git clone [repository_url]
-Open the index.php file in your web browser or set up a local server to run the application.
+# Gestión Guardería Náutica
 
-Explore the different sections of the application, including the client and kayak management.
+This is the README file for the "Gestión Guardería Náutica" project. It provides an overview of the project, its purpose, and how to navigate through the code.
 
-Dependencies
-  Bootstrap: The project uses Bootstrap for styling and layout.
-File Structure
-  index.php: The main homepage of the application.
-  clientes.php: Client management page.
-  kayaks.php: Kayak management page.
-  style.css: Custom CSS styles for the project.
-  statics/: Directory containing static assets like images (e.g., logo.webp).
-  logout.php: Page to log out of the application.
-  
-Contributing
+## Project Description
+
+- **Project Name**: Gestión Guardería Náutica
+- **Author**: Julian Decoppet
+- **Year**: 2023
+
+## Introduction
+
+Gestión Guardería Náutica is a web application designed to manage clients and kayaks in a nautical daycare setting. This README provides an overview of the project structure and key components.
+
+## Dependencies
+
+- **Bootstrap**: The project uses Bootstrap for styling and layout.
+
+## File Structure
+
+- `index.php`: The main homepage of the application.
+- `clientes.php`: Client management page.
+- `kayaks.php`: Kayak management page.
+- `style.css`: Custom CSS styles for the project.
+- `statics/`: Directory containing static assets like images (e.g., logo.webp).
+- `logout.php`: Page to log out of the application.
+
+## Contributing
+
 If you would like to contribute to this project, please open an issue or create a pull request. We welcome contributions and improvements.
 
-License
+## License
+
 This project is licensed under the MIT License. You are free to use, modify, and distribute this code.
 
-Contact
-For any questions or feedback, please contact [Your Email Address].
+## Contact
+For any questions or feedback, please contact [juliandecoppet@gmail.com].
 Make sure to replace `[Your Name]`, `[repository_url]`, and `[Your Email Address]` with the appropriate information for your project. You can also add more details or sections to the README as needed.
