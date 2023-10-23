@@ -65,11 +65,11 @@ $conexion->close();
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <div class="nav-item dropdown">
+            <li class="nav-item active">
+                <div class="nav-item dropdown active">
                     <a class="nav-link" href="kayaks.php" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="clientes.php">Lista clientes</a>
@@ -96,11 +96,11 @@ $conexion->close();
         </nav>
     </header>
    <main class="content m-3">
-        <h1>Registros de Clientes</h1>
+        <h1 class="text-center">Registros de Clientes</h1>
 
         <!-- Formulario para agregar un nuevo registro -->
-        <form method="post" action="procesar_formulario.php">
-            <div class="row">
+        <form method="post" action="procesar_formulario.php" class="d-flex flex-column align-items-center">
+            <div class="row w-75">
                 <div class="col-md-4">
                     <div class="form-group" style="margin-bottom: 15px;">
                         <label for="DNI">DNI:</label>
@@ -116,11 +116,11 @@ $conexion->close();
                 <div class="col-md-4">
                     <div class="form-group" style="margin-bottom: 15px;">
                         <label for="TELEFONO">TELEFONO:</label>
-                        <input class="form-control" type="text" id="TELEFONO" name="TELEFONO">
+                        <input class="form-control" type="text" id="TELÉFONO" name="TELEFONO">
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row w-75">
                 <div class="col-md-4">
                     <div class="form-group" style="margin-bottom: 15px;">
                         <label for="DIRECCION">DIRECCION:</label>
@@ -140,7 +140,7 @@ $conexion->close();
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row w-75">
                 <div class="col-md-4">
                     <div class="form-group" style="margin-bottom: 15px;">
                         <label for="ESTADO">ESTADO:</label>
@@ -154,24 +154,41 @@ $conexion->close();
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row w-75">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary btn-block" name="guardar">Guardar</button>
                 </div>
             </div>
         </form>
 
-
-
+        <form method="post" action="procesar_formulario.php" class="m-3 d-flex flex-column align-items-center">
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="search">BUSCAR:</label>
+                    <input class="form-control" type="search" id="search" name="search" required>
+                </div>
+                <div class="col-md-4 py-2">
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-block" name="search">Buscar</button>
+                </div>
+            </div>
+        </form>
         <!-- Lista de registros -->
-        <table class="m-5">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Teléfono</th>
-                <th>Correo</th>
-                <th>Acciones</th>
-            </tr>
+        <table class="table m-5 d-flex flex-row justify-content-center align-items-center">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Direccion</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+
             <?php
             if ($resultado->num_rows > 0) {
                 while ($fila = $resultado->fetch_assoc()) {
@@ -190,9 +207,10 @@ $conexion->close();
                     echo "</tr>";
                 }
             } else {
-                echo "No hay registros en la base de datos.";
+                echo "<p class=text-center>No hay registros en la base de datos.</p>";
             }
             ?>
+            </tbody>
         </table>
    </main>
 
