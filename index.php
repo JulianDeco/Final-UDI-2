@@ -31,8 +31,9 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="nav-item dropdown">
                     <a class="nav-link" href="kayaks.php" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Lista clientes</a>
-                        <a class="dropdown-item" href="#">Agregar cliente</a>
+                        <a class="dropdown-item" href="clientes.php">Lista clientes</a>
+                        <a class="dropdown-item" href="clientes.php">Agregar cliente</a>
+                        <a class="dropdown-item" href="autorizaciones.php">Agregar autorizaciones</a>
                     </div>
                 </div>
             </li>
@@ -41,8 +42,8 @@ if (!isset($_SESSION['user_id'])) {
             <div class="nav-item dropdown">
             <a class="nav-link" href="kayaks.php" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kayaks</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Lista kayaks</a>
-                        <a class="dropdown-item" href="#">Agregar cliente</a>
+                        <a class="dropdown-item" href="kayaks.php">Lista kayaks</a>
+                        <a class="dropdown-item" href="kayaks.php">Agregar cliente</a>
                     </div>
                 </div>
             </li>
@@ -91,9 +92,9 @@ if (!isset($_SESSION['user_id'])) {
 
     <footer class="py-3 my-4">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Inicio</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Clientes</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Kayaks</a></li>
+        <li class="nav-item"><a href="index.php" class="nav-link px-2 text-muted">Inicio</a></li>
+        <li class="nav-item"><a href="clientes.php" class="nav-link px-2 text-muted">Clientes</a></li>
+        <li class="nav-item"><a href="kayaks.php" class="nav-link px-2 text-muted">Kayaks</a></li>
         </ul>
         <p class="text-center text-muted">© 2023 Buena Ventura, Inc</p>
     </footer>
