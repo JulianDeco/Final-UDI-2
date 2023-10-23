@@ -60,5 +60,4 @@ If you would like to contribute to this project, please open an issue or create 
 This project is licensed under the MIT License. You are free to use, modify, and distribute this code.
 
 ## Contact
-For any questions or feedback, please contact [juliandecoppet@gmail.com].
-Make sure to replace `[Your Name]`, `[repository_url]`, and `[Your Email Address]` with the appropriate information for your project. You can also add more details or sections to the README as needed.
+For any questions or feedback, please contact juliandecoppet@gmail.com.
