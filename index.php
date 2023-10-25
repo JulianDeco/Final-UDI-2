@@ -18,7 +18,11 @@ if (!isset($_SESSION['user_id'])) {
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<<<<<<< HEAD
         <a class="navbar-brand" href="index.php"><img src="statics/kayaking.png" alt="" class="logo-guarderia"></a>
+=======
+        <a class="navbar-brand" href="index.php"><img src="statics/logo.webp" alt="" class="logo-guarderia"></a>
+>>>>>>> f305a0f664fa3f4bcb7e7f876296753237ab4cdc
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
