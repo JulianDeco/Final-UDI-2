@@ -12,7 +12,11 @@
 <body>
 <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<<<<<<< HEAD
+        <a class="navbar-brand" href="index.php"><img src="statics/kayaking.png" alt="" class="logo-guarderia"></a>
+=======
         <a class="navbar-brand" href="index.php"><img src="statics/logo.webp" alt="" class="logo-guarderia"></a>
+>>>>>>> f305a0f664fa3f4bcb7e7f876296753237ab4cdc
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -55,7 +59,11 @@
         <li class="nav-item"><a href="clientes.php" class="nav-link px-2 text-muted">Clientes</a></li>
         <li class="nav-item"><a href="kayaks.php" class="nav-link px-2 text-muted">Kayaks</a></li>
         </ul>
+<<<<<<< HEAD
+        <p class="text-center text-muted">© 2023 Guardería Náutica, Inc</p>
+=======
         <p class="text-center text-muted">© 2023 Buena Ventura, Inc</p>
+>>>>>>> f305a0f664fa3f4bcb7e7f876296753237ab4cdc
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
