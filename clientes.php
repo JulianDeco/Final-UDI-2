@@ -48,7 +48,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["eliminar"])) {
 
 
 // Consulta para obtener todos los registros
-$sql = "SELECT kayak_clientes.id, nombre, telefono, direccion, dni, K_E.descripcion, fecha_alta, fecha_baja, mail FROM kayak_clientes
+$sql = "SELECT kayak_clientes.id, 
+                nombre, 
+                telefono, 
+                direccion, 
+                dni, 
+                K_E.descripcion, 
+                fecha_alta, 
+                fecha_baja, 
+                mail FROM kayak_clientes
 INNER JOIN kayak_estados as K_E
 ON K_E.id = kayak_clientes.estado";
 $resultado = $conexion->query($sql);
