@@ -219,7 +219,7 @@ $conexion->close();
                     $sql = "SELECT kayak_clientes.id, nombre, telefono, direccion, dni, K_E.descripcion, fecha_alta, fecha_baja, mail FROM kayak_clientes
                     INNER JOIN kayak_estados as K_E
                     ON K_E.id = kayak_clientes.estado 
-                    WHERE dni LIKE '$search%'";
+                    WHERE dni LIKE '%$search%'";
 
                     $resultado_search = $conexion->query($sql);
 
