@@ -10,7 +10,7 @@ if ($conexion->connect_error) {
 }
 
 // Función para agregar un nuevo registro
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["NOMBRE"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["MODELO"])) {
     $nombreArchivo = $_FILES['FOTO']['name'];
     $archivoTemporal = $_FILES['FOTO']['tmp_name'];
     $tipoArchivo = $_FILES['FOTO']['type'];
@@ -18,35 +18,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["NOMBRE"])) {
     // Verificar que sea una imagen
     if (strpos($tipoArchivo, 'image') !== false) {
         // Mueve el archivo temporal a una ubicación deseada
-        $directorioDestino = 'uploads/';
-        $rutaArchivo = $directorioDestino . $nombreArchivo;
+        $directorioDestino = 'C:/xampp/htdocs/Final-UDI-2/uploads';
+        $rutaArchivo = $directorioDestino . '/' . $nombreArchivo;
+
+        $directorioDestino2 = 'uploads';
+        $rutaArchivo2 = $directorioDestino2 . '/' . $nombreArchivo;
 
         if (move_uploaded_file($archivoTemporal, $rutaArchivo)) {
             echo "La imagen se ha guardado con éxito en $rutaArchivo.";
+            // Obtener datos del formulario POST
+            $modelo = $_POST["MODELO"];
+            $tipo = $_POST["TIPO"];
+            $color = $_POST["COLOR"];
+            $cliente = $_POST["CLIENTE"];
+            $cliente_array = explode(" ", $cliente);
+            $fecha_alta = $_POST["FECHA_ALTA"];
+            $fecha_baja = $_POST["FECHA_BAJA"];
+
+            $tamano = count($cliente_array);
+            $indice = $tamano - 1;
+
+            // Crear la consulta SQL para insertar un nuevo registro en la tabla "registros"
+            $sql = "INSERT INTO kayak_kayaks (modelo, tipo, color, cliente, foto, fecha_alta, fecha_baja) VALUES ('$modelo', '$tipo', '$color', (SELECT id FROM kayak_clientes WHERE dni = '$cliente_array[$indice]'), '$rutaArchivo2', '$fecha_alta', '$fecha_baja')";
+            // Ejecutar la consulta y verificar si fue exitosa
+            if ($conexion->query($sql) === TRUE) {
+                // Redirigir de vuelta a la página actual después de agregar un registro
+                header("Location: " . $_SERVER['PHP_SELF']);
+            } else {
+                echo "Error: " . $sql . "<br>" . $conexion->error;
+            }
         } else {
             echo "Error al guardar la imagen.";
         }
     } else {
         echo "El archivo seleccionado no es una imagen válida.";
     }
-    // Obtener datos del formulario POST
-    $modelo = $_POST["MODELO"];
-    $tipo = $_POST["TIPO"];
-    $color = $_POST["COLOR"];
-    $cliente = $_POST["CLIENTE"].explode(" ");
-    $fecha_alta = $_POST["FECHA_ALTA"];
-    $fecha_baja = $_POST["FECHA_BAJA"];
-
-
-    // Crear la consulta SQL para insertar un nuevo registro en la tabla "registros"
-    $sql = "INSERT INTO kayak_kayaks (modelo, tipo, color, cliente, foto, fecha_alta, fecha_baja) VALUES ('$modelo', '$tipo', '$color', (SELECT kayak_clientes.id FROM kayak_clientes WHERE dni = '$dni_cliente'), ''$rutaArchivo, '$fecha_alta', '$fecha_baja')";
-    // Ejecutar la consulta y verificar si fue exitosa
-    if ($conexion->query($sql) === TRUE) {
-        // Redirigir de vuelta a la página actual después de agregar un registro
-        header("Location: " . $_SERVER['PHP_SELF']);
-    } else {
-        echo "Error: " . $sql . "<br>" . $conexion->error;
-    }
+    
 }
 
 // Función para eliminar un registro
@@ -55,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["eliminar"])) {
     $id = $_POST["eliminar"];
 
     // Crear la consulta SQL para eliminar un registro basado en su ID
-    $sql = "DELETE FROM kayak_clientes WHERE id=$id";
+    $sql = "DELETE FROM kayak_kayaks WHERE id=$id";
     $conexion->query($sql);
 
     // Redirigir de vuelta a la página actual después de eliminar un registro
@@ -65,7 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["eliminar"])) {
 
 
 // Consulta para obtener todos los registros
-$sql ="SELECT id, modelo, tipo, color, cliente, fecha_alta_fecha_baja FROM kayak_kayaks";
+$sql ="SELECT kayak_kayaks.id, modelo, tipo, color, kayak_clientes.nombre as cliente, kayak_kayaks.fecha_alta, kayak_kayaks.fecha_baja, foto FROM kayak_kayaks
+        INNER JOIN kayak_clientes
+        ON kayak_kayaks.cliente = kayak_clientes.id";
 $resultado = $conexion->query($sql);
 
 // Cerrar la conexión a la base de datos
@@ -126,7 +135,7 @@ $conexion->close();
         <h1 class="text-center">Registros de Kayak</h1>
 
         <!-- Formulario para agregar un nuevo registro -->
-        <form method="post" action="kayaks.php" class="d-flex flex-column align-items-center">
+        <form method="POST" action="kayaks.php" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
             <div class="row w-75">
                 <div class="col-md-4">
                     <div class="form-group" style="margin-bottom: 15px;">
@@ -246,7 +255,6 @@ $conexion->close();
                         echo "<td>" . $fila["tipo"] . "</td>";
                         echo "<td>" . $fila["color"] . "</td>";
                         echo "<td>" . $fila["cliente"] . "</td>";
-                        echo "<td>" . $fila["descripcion"] . "</td>";
                         echo "<td>" . $fila["fecha_alta"] . "</td>";
                         echo "<td>" . $fila["fecha_baja"] . "</td>";
                         // Crear un formulario para eliminar un registro con un botón "Eliminar"
@@ -271,9 +279,9 @@ $conexion->close();
                         echo "<td>" . $fila["tipo"] . "</td>";
                         echo "<td>" . $fila["color"] . "</td>";
                         echo "<td>" . $fila["cliente"] . "</td>";
-                        echo "<td>" . $fila["descripcion"] . "</td>";
                         echo "<td>" . $fila["fecha_alta"] . "</td>";
                         echo "<td>" . $fila["fecha_baja"] . "</td>";
+                        echo '<td><img src="' . $fila["foto"] . '" alt="Mi Imagen"></td>';
                         // Crear un formulario para eliminar un registro con un botón "Eliminar"
                         echo "<td>
                         <form method='POST' action='" . $_SERVER['PHP_SELF'] . "'>
