@@ -12,9 +12,8 @@ if ($conexion->connect_error) {
 // Función para agregar un nuevo registro
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["NOMBRE"])) {
     $nombreArchivo = $_FILES['FOTO']['name'];
-    $tipoArchivo = $_FILES['FOTO']['type'];
-    $tamañoArchivo = $_FILES['FOTO']['size'];
     $archivoTemporal = $_FILES['FOTO']['tmp_name'];
+    $tipoArchivo = $_FILES['FOTO']['type'];
 
     // Verificar que sea una imagen
     if (strpos($tipoArchivo, 'image') !== false) {
@@ -38,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["NOMBRE"])) {
     $fecha_alta = $_POST["FECHA_ALTA"];
     $fecha_baja = $_POST["FECHA_BAJA"];
 
-    $dni_cliente = $cliente[1];
 
     // Crear la consulta SQL para insertar un nuevo registro en la tabla "registros"
     $sql = "INSERT INTO kayak_kayaks (modelo, tipo, color, cliente, foto, fecha_alta, fecha_baja) VALUES ('$modelo', '$tipo', '$color', (SELECT kayak_clientes.id FROM kayak_clientes WHERE dni = '$dni_cliente'), ''$rutaArchivo, '$fecha_alta', '$fecha_baja')";
