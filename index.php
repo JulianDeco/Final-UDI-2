@@ -33,7 +33,6 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="clientes.php">Lista clientes</a>
                         <a class="dropdown-item" href="clientes.php">Agregar cliente</a>
-                        <a class="dropdown-item" href="autorizaciones.php">Agregar autorizaciones</a>
                     </div>
                 </div>
             </li>
@@ -43,7 +42,7 @@ if (!isset($_SESSION['user_id'])) {
             <a class="nav-link" href="kayaks.php" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kayaks</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="kayaks.php">Lista kayaks</a>
-                        <a class="dropdown-item" href="kayaks.php">Agregar cliente</a>
+                        <a class="dropdown-item" href="kayaks.php">Agregar kayak</a>
                     </div>
                 </div>
             </li>
@@ -71,7 +70,7 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="card-body">
                         <h5 class="card-title">Administración de clientes</h5>
                         <p class="card-text">Podés <strong>AGREGAR, ELIMINAR O EDITAR</strong> tu lista de clientes.</p>
-                        <a href="#" class="btn btn-primary">CLIENTES</a>
+                        <a href="clientes.php" class="btn btn-primary">CLIENTES</a>
                     </div>
                 </div>
 
@@ -83,7 +82,7 @@ if (!isset($_SESSION['user_id'])) {
                         <h5 class="card-title">Administración de kayaks</h5>
                         <p class="card-text">Podés <strong>AGREGAR, ELIMINAR O EDITAR</strong> kayaks de tus clientes.</p>
                         <p class="card-text">Para agregar un kayak, este debe asociarse a un cliente.</p>
-                        <a href="#" class="btn btn-primary">KAYAKS</a>
+                        <a href="kayaks.php" class="btn btn-primary">KAYAKS</a>
                     </div>
                     </div>
                 </div>

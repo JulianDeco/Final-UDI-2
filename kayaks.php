@@ -1,23 +1,22 @@
 <?php
 
 session_start();
-// Conexión a la base de datos
+
 $conexion = new mysqli("localhost", "root", "", "registro-kayaks");
 
-// Verificar la conexión
 if ($conexion->connect_error) {
     die("Error en la conexión a la base de datos: " . $conexion->connect_error);
 }
 
-// Función para agregar un nuevo registro
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["MODELO"])) {
     $nombreArchivo = $_FILES['FOTO']['name'];
     $archivoTemporal = $_FILES['FOTO']['tmp_name'];
     $tipoArchivo = $_FILES['FOTO']['type'];
 
-    // Verificar que sea una imagen
+    
     if (strpos($tipoArchivo, 'image') !== false) {
-        // Mueve el archivo temporal a una ubicación deseada
+        
         $directorioDestino = 'C:/xampp/htdocs/Final-UDI-2/uploads';
         $rutaArchivo = $directorioDestino . '/' . $nombreArchivo;
 
@@ -26,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["MODELO"])) {
 
         if (move_uploaded_file($archivoTemporal, $rutaArchivo)) {
             echo "La imagen se ha guardado con éxito en $rutaArchivo.";
-            // Obtener datos del formulario POST
+            
             $modelo = $_POST["MODELO"];
             $tipo = $_POST["TIPO"];
             $color = $_POST["COLOR"];
@@ -38,11 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["MODELO"])) {
             $tamano = count($cliente_array);
             $indice = $tamano - 1;
 
-            // Crear la consulta SQL para insertar un nuevo registro en la tabla "registros"
+            
             $sql = "INSERT INTO kayak_kayaks (modelo, tipo, color, cliente, foto, fecha_alta, fecha_baja) VALUES ('$modelo', '$tipo', '$color', (SELECT id FROM kayak_clientes WHERE dni = '$cliente_array[$indice]'), '$rutaArchivo2', '$fecha_alta', '$fecha_baja')";
-            // Ejecutar la consulta y verificar si fue exitosa
+            
             if ($conexion->query($sql) === TRUE) {
-                // Redirigir de vuelta a la página actual después de agregar un registro
+                
                 header("Location: " . $_SERVER['PHP_SELF']);
             } else {
                 echo "Error: " . $sql . "<br>" . $conexion->error;
@@ -56,28 +55,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["MODELO"])) {
     
 }
 
-// Función para eliminar un registro
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["eliminar"])) {
-    // Obtener el ID del registro a eliminar del formulario POST
+    
     $id = $_POST["eliminar"];
 
-    // Crear la consulta SQL para eliminar un registro basado en su ID
+    
     $sql = "DELETE FROM kayak_kayaks WHERE id=$id";
     $conexion->query($sql);
 
-    // Redirigir de vuelta a la página actual después de eliminar un registro
+   
     header("Location: " . $_SERVER['PHP_SELF']);
 }
 
 
 
-// Consulta para obtener todos los registros
+
 $sql ="SELECT kayak_kayaks.id, modelo, tipo, color, kayak_clientes.nombre as cliente, kayak_kayaks.fecha_alta, kayak_kayaks.fecha_baja, foto FROM kayak_kayaks
         INNER JOIN kayak_clientes
         ON kayak_kayaks.cliente = kayak_clientes.id";
 $resultado = $conexion->query($sql);
 
-// Cerrar la conexión a la base de datos
+
 $conexion->close();
 ?>
 
@@ -110,7 +109,6 @@ $conexion->close();
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="clientes.php">Lista clientes</a>
                         <a class="dropdown-item" href="clientes.php">Agregar cliente</a>
-                        <a class="dropdown-item" href="autorizaciones.php">Agregar autorizaciones</a>
                     </div>
                 </div>
             </li>
@@ -120,7 +118,7 @@ $conexion->close();
                 <a class="nav-link" href="kayaks.php" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kayaks</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="kayaks.php">Lista kayaks</a>
-                        <a class="dropdown-item" href="kayaks.php">Agregar cliente</a>
+                        <a class="dropdown-item" href="kayaks.php">Agregar kayak</a>
                     </div>
                 </div>
             </li>
@@ -134,7 +132,7 @@ $conexion->close();
     <main class="content m-3">
         <h1 class="text-center">Registros de Kayak</h1>
 
-        <!-- Formulario para agregar un nuevo registro -->
+        
         <form method="POST" action="kayaks.php" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
             <div class="row w-75">
                 <div class="col-md-4">
@@ -219,7 +217,7 @@ $conexion->close();
             </div>
         </form>
 
-        <!-- Lista de registros -->
+        
         <table class="table m-3">
             <thead>
                 <tr>
@@ -230,6 +228,7 @@ $conexion->close();
                     <th scope="col">Cliente</th>
                     <th scope="col">Fecha alta</th>
                     <th scope="col">Fecha baja</th>
+                    <th scope="col">Foto</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -241,10 +240,8 @@ $conexion->close();
                     $conexion = new mysqli("localhost", "root", "", "registro-kayaks");
                     $search = $_POST["search"];
 
-                    $sql = "SELECT id, modelo, tipo, color, cliente, fecha_alta_fecha_baja FROM kayak_kayaks
-                    INNER JOIN kayak_estados as K_E
-                    ON K_E.id = kayak_clientes.estado 
-                    WHERE dni LIKE '%$search%'";
+                    $sql = "SELECT kayak_kayaks.id, modelo, tipo, color, cliente, fecha_alta, fecha_baja, foto FROM kayak_kayaks
+                    WHERE tipo LIKE '%$search%'";
                     
                     $resultado_search = $conexion->query($sql);
 
@@ -257,13 +254,14 @@ $conexion->close();
                         echo "<td>" . $fila["cliente"] . "</td>";
                         echo "<td>" . $fila["fecha_alta"] . "</td>";
                         echo "<td>" . $fila["fecha_baja"] . "</td>";
-                        // Crear un formulario para eliminar un registro con un botón "Eliminar"
+                        echo '<td><img src="' . $fila["foto"] . '" alt="Mi Imagen"></td>';
+                        
                         echo "<td>
                         <form method='post' action='" . $_SERVER['PHP_SELF'] . "'>
                             <input type='hidden' name='eliminar' value='" . $fila["id"] . "'>
                             <input type='submit' value='Eliminar' class='btn btn-primary w-50'>
                         </form>
-                        <form method='post' action='procesar_cliente_formulario.php'>
+                        <form method='post' action='procesar_kayak_formulario.php'>
                             <input type='hidden' name='modificarBtn' value='" . $fila["id"] . "'>
                             <button type='submit' class='btn btn-warning w-50 my-2' data-bs-toggle='modal' data-bs-target='#exampleModal'>Modificar</button>
                         </form>
@@ -282,13 +280,13 @@ $conexion->close();
                         echo "<td>" . $fila["fecha_alta"] . "</td>";
                         echo "<td>" . $fila["fecha_baja"] . "</td>";
                         echo '<td><img src="' . $fila["foto"] . '" alt="Mi Imagen"></td>';
-                        // Crear un formulario para eliminar un registro con un botón "Eliminar"
+                        
                         echo "<td>
                         <form method='POST' action='" . $_SERVER['PHP_SELF'] . "'>
                             <input type='hidden' name='eliminar' value='" . $fila["id"] . "'>
                             <input type='submit' value='Eliminar' class='btn btn-primary w-75'>
                         </form>
-                        <form method='POST' action='procesar_cliente_formulario.php'>
+                        <form method='POST' action='procesar_kayak_formulario.php'>
                             <input type='hidden' name='modificarBtn' value='" . $fila["id"] . "'>
                             <button id='btnModificarJS' type='submit' class='btn btn-warning my-2' >Modificar</button>
                         </form>

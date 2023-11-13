@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["DNI"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Modificar cliente</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -68,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["DNI"])) {
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="clientes.php">Lista clientes</a>
                                 <a class="dropdown-item" href="clientes.php">Agregar cliente</a>
-                                <a class="dropdown-item" href="autorizaciones.php">Agregar autorizaciones</a>
                             </div>
                         </div>
                     </li>
@@ -78,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["DNI"])) {
                             <a class="nav-link" href="kayaks.php" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kayaks</a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="kayaks.php">Lista kayaks</a>
-                                <a class="dropdown-item" href="kayaks.php">Agregar cliente</a>
+                                <a class="dropdown-item" href="kayaks.php">Agregar kayak</a>
                             </div>
                         </div>
                     </li>

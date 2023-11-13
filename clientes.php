@@ -86,7 +86,6 @@ $conexion->close();
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="clientes.php">Lista clientes</a>
                                 <a class="dropdown-item" href="clientes.php">Agregar cliente</a>
-                                <a class="dropdown-item" href="autorizaciones.php">Agregar autorizaciones</a>
                             </div>
                         </div>
                     </li>
@@ -96,7 +95,7 @@ $conexion->close();
                             <a class="nav-link" href="kayaks.php" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kayaks</a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="kayaks.php">Lista kayaks</a>
-                                <a class="dropdown-item" href="kayaks.php">Agregar cliente</a>
+                                <a class="dropdown-item" href="kayaks.php">Agregar kayak</a>
                             </div>
                         </div>
                     </li>
