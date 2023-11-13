@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["MODELO"])) {
     if (!$vacio) {
         $rutaArchivo2 = "";
 
-        // Handle file upload
+        
         if ($_FILES['FOTO']['error'] == UPLOAD_ERR_OK) {
             $nombreArchivo = $_FILES['FOTO']['name'];
             $archivoTemporal = $_FILES['FOTO']['tmp_name'];
             $tipoArchivo = $_FILES['FOTO']['type'];
 
-            // Verify that it is an image
+            
             if (strpos($tipoArchivo, 'image') !== false) {
                 $directorioDestino = 'C:/xampp/htdocs/Final-UDI-2/uploads';
                 $rutaArchivo = $directorioDestino . '/' . $nombreArchivo;
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["MODELO"])) {
                 $directorioDestino2 = 'uploads';
                 $rutaArchivo2 = $directorioDestino2 . '/' . $nombreArchivo;
 
-                // Move the temporary file to the desired location
+                
                 if (move_uploaded_file($archivoTemporal, $rutaArchivo)) {
                     echo "La imagen se ha guardado con éxito en $rutaArchivo.";
                 } else {

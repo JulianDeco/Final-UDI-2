@@ -1,17 +1,17 @@
 <?php
 
 session_start();
-// Conexión a la base de datos
+
 $conexion = new mysqli("localhost", "root", "", "registro-kayaks");
 
-// Verificar la conexión
+
 if ($conexion->connect_error) {
     die("Error en la conexión a la base de datos: " . $conexion->connect_error);
 }
 
-// Función para agregar un nuevo registro
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["NOMBRE"])) {
-    // Obtener datos del formulario POST
+    
     $nombre = $_POST["NOMBRE"];
     $telefono = $_POST["TELEFONO"];
     $direccion = $_POST["DIRECCION"];
@@ -21,39 +21,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["NOMBRE"])) {
     $fecha_alta = $_POST["FECHA_ALTA"];
     $fecha_baja = $_POST["FECHA_BAJA"];
 
-    // Crear la consulta SQL para insertar un nuevo registro en la tabla "registros"
+    
     $sql = "INSERT INTO kayak_clientes (nombre, telefono, mail,dni, fecha_alta,  fecha_baja, direccion, estado) VALUES ('$nombre', '$telefono', '$mail', '$dni', '$fecha_alta', '$fecha_baja', '$direccion', (SELECT id FROM kayak_estados WHERE descripcion = '$estado'))";
-    // Ejecutar la consulta y verificar si fue exitosa
+    
     if ($conexion->query($sql) === TRUE) {
-        // Redirigir de vuelta a la página actual después de agregar un registro
+        
         header("Location: " . $_SERVER['PHP_SELF']);
     } else {
         echo "Error: " . $sql . "<br>" . $conexion->error;
     }
 }
 
-// Función para eliminar un registro
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["eliminar"])) {
-    // Obtener el ID del registro a eliminar del formulario POST
+    
     $id = $_POST["eliminar"];
 
-    // Crear la consulta SQL para eliminar un registro basado en su ID
+    
     $sql = "DELETE FROM kayak_clientes WHERE id=$id";
     $conexion->query($sql);
 
-    // Redirigir de vuelta a la página actual después de eliminar un registro
+    
     header("Location: " . $_SERVER['PHP_SELF']);
 }
 
 
 
-// Consulta para obtener todos los registros
+
 $sql = "SELECT kayak_clientes.id, nombre, telefono, direccion, dni, K_E.descripcion, fecha_alta, fecha_baja, mail FROM kayak_clientes
 INNER JOIN kayak_estados as K_E
 ON K_E.id = kayak_clientes.estado";
 $resultado = $conexion->query($sql);
 
-// Cerrar la conexión a la base de datos
+
 $conexion->close();
 ?>
 
@@ -109,7 +109,7 @@ $conexion->close();
     <main class="content m-3">
         <h1 class="text-center">Registros de Clientes</h1>
 
-        <!-- Formulario para agregar un nuevo registro -->
+        
         <form method="post" action="clientes.php" class="d-flex flex-column align-items-center">
             <div class="row w-75">
                 <div class="col-md-4">
@@ -191,7 +191,7 @@ $conexion->close();
             </div>
         </form>
 
-        <!-- Lista de registros -->
+        
         <table class="table m-3">
             <thead>
                 <tr>
@@ -233,7 +233,7 @@ $conexion->close();
                         echo "<td>" . $fila["descripcion"] . "</td>";
                         echo "<td>" . $fila["fecha_alta"] . "</td>";
                         echo "<td>" . $fila["fecha_baja"] . "</td>";
-                        // Crear un formulario para eliminar un registro con un botón "Eliminar"
+                        
                         echo "<td>
                         <form method='post' action='" . $_SERVER['PHP_SELF'] . "'>
                             <input type='hidden' name='eliminar' value='" . $fila["id"] . "'>
@@ -259,7 +259,7 @@ $conexion->close();
                         echo "<td>" . $fila["descripcion"] . "</td>";
                         echo "<td>" . $fila["fecha_alta"] . "</td>";
                         echo "<td>" . $fila["fecha_baja"] . "</td>";
-                        // Crear un formulario para eliminar un registro con un botón "Eliminar"
+                        
                         echo "<td>
                         <form method='POST' action='" . $_SERVER['PHP_SELF'] . "'>
                             <input type='hidden' name='eliminar' value='" . $fila["id"] . "'>

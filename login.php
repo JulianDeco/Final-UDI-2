@@ -2,22 +2,22 @@
 session_start();
 
 if (isset($_SESSION['user_id'])) {
-    // Si el usuario ya está autenticado, redirige a la página protegida
+
     header("Location: index.php");
     exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verifica los datos de inicio de sesión
+
     $servername = "localhost";
     $username = "root";
     $password = "";
     $dbname = "registro-kayaks";
 
-    // Crea la conexión a la base de datos
+
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Verifica si hay errores en la conexión
+
     if ($conn->connect_error) {
         die("Error de conexión: " . $conn->connect_error);
     }
@@ -25,14 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Consulta para verificar el usuario
+
     $sql = "SELECT id, name, password, email FROM kayak_users WHERE email = '$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
-            // Inicia sesión y redirige a la página protegida
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['user_name'] = $row['name'];
             header("Location: index.php");

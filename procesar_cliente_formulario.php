@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-// Conexión a la base de datos
+
 $conexion = new mysqli("localhost", "root", "", "registro-kayaks");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["DNI"])) { 
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["DNI"])) {
     $fecha_baja = $_POST["FECHA_BAJA"];
     $id = $_SESSION['id'];
 
-    // Crear la consulta SQL para insertar un nuevo registro en la tabla "registros"
+
     $sql = "UPDATE kayak_clientes 
         SET nombre = '$nombre', 
             telefono = '$telefono', 
@@ -28,9 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["DNI"])) {
         WHERE id = '$id'";
 
 
-    // Ejecutar la consulta y verificar si fue exitosa
+
     if ($conexion->query($sql) === TRUE) {
-        // Redirigir de vuelta a la página actual después de agregar un registro
+
         header("Location: clientes.php" );
     } else {
         echo "Error: " . $sql . "<br>" . $conexion->error;
@@ -92,20 +92,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["DNI"])) {
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["modificarBtn"])) {
-    // Obtener el ID del registro a eliminar del formulario POST
+    
     $id = $_POST["modificarBtn"];
     $_SESSION["id"] = $id;
 
- // Crear la consulta SQL para seleccionar un registro basado en su ID
+
     $sql = "SELECT id, nombre, telefono, direccion, dni, (SELECT descripcion FROM kayak_estados WHERE id = $id), fecha_alta, fecha_baja, mail FROM kayak_clientes WHERE id=$id";
     if ($conexion->query($sql) === TRUE) {
-     // La consulta se ejecutó con éxito
+
     } else {
     echo "Error en la consulta: " . $conexion->error;
     }
                         
     $resultado = $conexion->query($sql);
-    // Verificar si se obtuvieron resultados y asignarlos a variables
+
     if ($resultado && $resultado->num_rows > 0) {
         $row = $resultado->fetch_assoc();
         $dni = $row['dni'];
@@ -117,9 +117,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["modificarBtn"])) {
         $estado = $row['estado'];
         $mail = $row['mail'];
     } else {
-        // Manejar el caso en el que no se encuentren resultados
+
         echo "No se encontraron resultados.";
-        // Puedes agregar aquí el código necesario en caso de que no haya resultados.
+
     }
 
 ?>
